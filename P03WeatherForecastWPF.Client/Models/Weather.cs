@@ -8,5 +8,7 @@ namespace P03WeatherForecastWPF.Client.Models
     {
         public string Time { get; set; }
         public double Temperature2m { get; set; }
+
+        public bool IsVisible =>  Convert.ToInt32(Temperature2m) % 2 == 0; // przykładowa logika widoczności, np. tylko parzyste temperatury są widoczne
     }
 }

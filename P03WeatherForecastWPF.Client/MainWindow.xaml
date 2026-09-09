@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P03WeatherForecastWPF.Client"
+        xmlns:converters="clr-namespace:P03WeatherForecastWPF.Client.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
 
+    <Window.Resources>
+        <converters:TemperatureToDisplayConverter x:Key="temperatureToDispConv"></converters:TemperatureToDisplayConverter>
+        <BooleanToVisibilityConverter x:Key="boolToVisConv"></BooleanToVisibilityConverter>
+    </Window.Resources>
+    
     <DockPanel>
         <StackPanel DockPanel.Dock="Left" Width="150">
             <Label Content="City"></Label>
@@ -19,7 +25,8 @@
             <Label Content="Temperature fo City:"></Label>
             <Label x:Name="lblCityName" Content="{Binding SelectedCity.FullName}"></Label>
             <Label Content="is:"></Label>
-            <Label x:Name="lblTemperatureValue" Content="{Binding Weather.Temperature2m}"></Label>
+            <Label x:Name="lblTemperatureValue" Content="{Binding Weather.Temperature2m, Converter={StaticResource temperatureToDispConv}}"></Label>
+            <Label Content="Wartosc parzysta" Visibility="{Binding Weather.IsVisible, Converter={StaticResource boolToVisConv}}"></Label>
         </StackPanel>
     </DockPanel>
 </Window>
