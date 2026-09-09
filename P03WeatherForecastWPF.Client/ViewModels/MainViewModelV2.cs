@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using P03WeatherForecastWPF.Client.Commands;
 using P03WeatherForecastWPF.Client.Models;
 using P03WeatherForecastWPF.Client.Services;
@@ -72,11 +73,14 @@ namespace P03WeatherForecastWPF.Client.ViewModels
         //public ICommand LoadCitiesCommand { get; }
 
 
-        public MainViewModelV2(IMeteoService meteoService)
+         private readonly IServiceProvider _serviceProvider;
+
+        public MainViewModelV2(IMeteoService meteoService, IServiceProvider serviceProvider)
         {
             //LoadCitiesCommand = new RelayCommand(x => loadCities());
             _ims = meteoService;
             Cities = new ObservableCollection<City>();
+            _serviceProvider = serviceProvider;
         }
 
         [RelayCommand]
@@ -111,6 +115,19 @@ namespace P03WeatherForecastWPF.Client.ViewModels
                 //};
                 Weather = await _ims.GetCurrentConditionsAsync(SelectedCity.Latitude, SelectedCity.Longitude);
             }
+        }
+
+        [RelayCommand]
+        public void OpenWindow()
+        {
+            var secondWindow = _serviceProvider.GetService<SecondWindow>();
+            var secondWindowViewModel = _serviceProvider.GetService<SecondWindowViewModel>();
+            secondWindowViewModel.Title = "Second Window";
+
+            secondWindow.DataContext = secondWindowViewModel;
+
+
+            secondWindow.Show();
         }
     }
 }
