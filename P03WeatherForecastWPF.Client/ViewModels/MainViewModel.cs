@@ -11,20 +11,13 @@ using System.Windows.Input;
 
 namespace P03WeatherForecastWPF.Client.ViewModels
 {
-    internal class MainViewModel : INotifyPropertyChanged, IMainViewModel
+    internal class MainViewModel : BaseViewModel, IMainViewModel
     {
         private string _cityName = "Warszawa";
         private City[] _cities;
         private City _selectedCity;
         private Weather _weather;
         private IMeteoService _ims;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
 
         public string CityName
