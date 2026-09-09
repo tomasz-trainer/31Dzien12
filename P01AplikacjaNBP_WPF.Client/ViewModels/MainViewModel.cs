@@ -18,16 +18,17 @@ namespace P01AplikacjaNBP_WPF.Client.ViewModels
             _webApiService = webApiService;
         }
 
-        private ObservableCollection<Rate> _exchangeRates = new ObservableCollection<Rate>();
+        [ObservableProperty]
+        private ObservableCollection<Rate> rates = new ObservableCollection<Rate>();
 
         [RelayCommand]
         private async Task LoadRatesAsync()
         {
-            var rates = await _webApiService.GetExchangeRatesAsync();
-            _exchangeRates.Clear();
-            foreach (var rate in rates)
+            var _rates = await _webApiService.GetExchangeRatesAsync();
+            rates.Clear();
+            foreach (var rate in _rates)
             {
-                _exchangeRates.Add(rate);
+                rates.Add(rate);
             }
 
         }

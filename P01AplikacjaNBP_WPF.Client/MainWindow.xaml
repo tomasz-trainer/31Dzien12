@@ -13,5 +13,18 @@
         </Grid.RowDefinitions>
 
         <Button Content="Pobierz kursy walut" Command="{Binding LoadRatesCommand}"></Button>
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding Rates}" 
+                  >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Waluta" Binding="{Binding Currency}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Kod" Binding="{Binding Code}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Mid" Binding="{Binding Mid}"></DataGridTextColumn>
+            </DataGrid.Columns>
+            
+        </DataGrid>
+        
     </Grid>
 </Window>
