@@ -24,11 +24,13 @@ namespace P03WeatherForecastWPF.Client
 
         private void ConfigureServices(IServiceCollection services)
         {
-           // services.AddSingleton<IMeteoService, OpenMeteoService>(); // rejestracja serwisu jako singleton
-            services.AddSingleton<IMeteoService, FakeMeteoService>(); // rejestracja serwisu jako singleton
+            services.AddSingleton<IMeteoService, OpenMeteoService>(); // rejestracja serwisu jako singleton
+           // services.AddSingleton<IMeteoService, FakeMeteoService>(); // rejestracja serwisu jako singleton
 
 
-            services.AddSingleton<IMainViewModel, MainViewModel>(); // rejestracja MainViewModel jako singleton
+            //services.AddSingleton<IMainViewModel, MainViewModel>(); // rejestracja MainViewModel jako singleton
+            services.AddSingleton<IMainViewModel, MainViewModelV2>(); // rejestracja MainViewModel jako singleton
+
 
             services.AddTransient<MainWindow>(); // tworzy instancję MainWindow przy każdym żądaniu
 
