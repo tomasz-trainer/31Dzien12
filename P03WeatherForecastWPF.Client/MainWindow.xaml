@@ -11,7 +11,7 @@
         <StackPanel DockPanel.Dock="Left" Width="150">
             <Label Content="City"></Label>
             <TextBox x:Name="txtCity" Text="{Binding CityName}"></TextBox>
-            <Button x:Name="btnSearch" Content="Search"></Button>
+            <Button Command="{Binding LoadCitiesCommand}" x:Name="btnSearch" Content="Search"></Button>
             <ListBox x:Name="lbData" DisplayMemberPath="FullName" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" ></ListBox>
         </StackPanel>
 

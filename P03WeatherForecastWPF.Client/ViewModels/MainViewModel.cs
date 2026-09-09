@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace P03WeatherForecastWPF.Client.ViewModels
 {
@@ -17,7 +18,10 @@ namespace P03WeatherForecastWPF.Client.ViewModels
         public string CityName
         {
             get { return _cityName; }
-            set { _cityName = value; }
+            set
+            {
+                _cityName = value;
+            }
         }
 
         public City[] Cities
@@ -36,6 +40,21 @@ namespace P03WeatherForecastWPF.Client.ViewModels
         {
             get { return weather; }
             set { weather = value; }
+        }
+
+        public ICommand LoadCitiesCommand { get; }
+
+
+        private async void loadCities()
+        {
+            Cities = new City[]
+            {
+                new City { Name = "Warszawa", Country = "Polska" },
+                new City { Name = "Kraków", Country = "Polska" },
+                new City { Name = "Wrocław", Country = "Polska" },
+                new City { Name = "Gdańsk", Country = "Polska" },
+                new City { Name = "Poznań", Country = "Polska" }
+            };
         }
     }
 }
