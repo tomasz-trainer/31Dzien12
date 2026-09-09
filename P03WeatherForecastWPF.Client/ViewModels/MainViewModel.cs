@@ -1,18 +1,27 @@
-﻿using P03WeatherForecastWPF.Client.Models;
+﻿using P03WeatherForecastWPF.Client.Commands;
+using P03WeatherForecastWPF.Client.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 
 namespace P03WeatherForecastWPF.Client.ViewModels
 {
-    internal class MainViewModel
+    internal class MainViewModel : INotifyPropertyChanged
     {
         private string _cityName = "Warszawa";
         private City[] _cities;
         private City _selectedCity;
         private Weather weather;
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
 
         public string CityName
@@ -27,23 +36,38 @@ namespace P03WeatherForecastWPF.Client.ViewModels
         public City[] Cities
         {
             get { return _cities; }
-            set { _cities = value; }
+            set { 
+
+                _cities = value;
+                OnPropertyChanged();
+            }
         }
 
         public City SelectedCity
         {
             get { return _selectedCity; }
-            set { _selectedCity = value; }
+            set { 
+                _selectedCity = value;
+                OnPropertyChanged();
+            }
         }
 
         public Weather Weather
         {
             get { return weather; }
-            set { weather = value; }
+            set { 
+                weather = value;
+                OnPropertyChanged();
+            }
         }
 
         public ICommand LoadCitiesCommand { get; }
 
+
+        public MainViewModel()
+        {
+            LoadCitiesCommand = new RelayCommand(x => loadCities());
+        }
 
         private async void loadCities()
         {
@@ -55,6 +79,7 @@ namespace P03WeatherForecastWPF.Client.ViewModels
                 new City { Name = "Gdańsk", Country = "Polska" },
                 new City { Name = "Poznań", Country = "Polska" }
             };
+           // OnPropertyChanged("Cities");
         }
     }
 }
