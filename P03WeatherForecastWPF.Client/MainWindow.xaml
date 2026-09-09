@@ -17,7 +17,7 @@
 
         <StackPanel>
             <Label Content="Temperature fo City:"></Label>
-            <Label x:Name="lblCityName"></Label>
+            <Label x:Name="lblCityName" Content="{Binding SelectedCity.FullName}"></Label>
             <Label Content="is:"></Label>
             <Label x:Name="lblTemperatureValue" Content="{Binding Weather.Temperature2m}"></Label>
         </StackPanel>

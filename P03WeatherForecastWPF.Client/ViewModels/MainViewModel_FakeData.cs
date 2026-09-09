@@ -1,6 +1,5 @@
 ﻿using P03WeatherForecastWPF.Client.Commands;
 using P03WeatherForecastWPF.Client.Models;
-using P04WeatherForecastConsole.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,13 +9,12 @@ using System.Windows.Input;
 
 namespace P03WeatherForecastWPF.Client.ViewModels
 {
-    internal class MainViewModel : INotifyPropertyChanged
+    internal class MainViewModel_FakeData : INotifyPropertyChanged
     {
         private string _cityName = "Warszawa";
         private City[] _cities;
         private City _selectedCity;
         private Weather weather;
-        OpenMeteoService oms = new OpenMeteoService();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -68,37 +66,33 @@ namespace P03WeatherForecastWPF.Client.ViewModels
         public ICommand LoadCitiesCommand { get; }
 
 
-        public MainViewModel()
+        public MainViewModel_FakeData()
         {
             LoadCitiesCommand = new RelayCommand(x => loadCities());
         }
 
         private async void loadCities()
         {
-            //Cities = new City[]
-            //{
-            //    new City { Name = "Warszawa", Country = "Polska" },
-            //    new City { Name = "Kraków", Country = "Polska" },
-            //    new City { Name = "Wrocław", Country = "Polska" },
-            //    new City { Name = "Gdańsk", Country = "Polska" },
-            //    new City { Name = "Poznań", Country = "Polska" }
-            //};
+            Cities = new City[]
+            {
+                new City { Name = "Warszawa", Country = "Polska" },
+                new City { Name = "Kraków", Country = "Polska" },
+                new City { Name = "Wrocław", Country = "Polska" },
+                new City { Name = "Gdańsk", Country = "Polska" },
+                new City { Name = "Poznań", Country = "Polska" }
+            };
            // OnPropertyChanged("Cities");
-
-           
-            Cities = await oms.GetLocationsAsync(_cityName);
         }
 
         private async void loadWeather()
         {
             if (SelectedCity != null)
             {
-                //Weather = new Weather
-                //{
-                //    Time = DateTime.Now.ToString("HH:mm:ss"),
-                //    Temperature2m = 27
-                //};
-                Weather = await oms.GetCurrentConditionsAsync(SelectedCity.Latitude, SelectedCity.Longitude);
+                Weather = new Weather
+                {
+                    Time = DateTime.Now.ToString("HH:mm:ss"),
+                    Temperature2m = 27
+                };
             }
         }
     }
