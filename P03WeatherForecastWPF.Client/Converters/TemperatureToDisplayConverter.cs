@@ -11,12 +11,24 @@ namespace P03WeatherForecastWPF.Client.Converters
         private const string _tempCode = "°C";
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value is double)
+                return $"{value}{_tempCode}";
+
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            string temperatureString = value as string;
+            if(temperatureString != null && temperatureString.EndsWith(_tempCode))
+            {
+                string numberPart = temperatureString.Substring(0, temperatureString.Length - _tempCode.Length);
+                if (double.TryParse(numberPart, out double result))
+                {
+                    return result;
+                }
+            }
+            return value;
         }
     }
 }
