@@ -46,9 +46,11 @@ namespace P03WeatherForecastWPF.Client.ViewModels
         public City SelectedCity
         {
             get { return _selectedCity; }
-            set { 
+            set 
+            { 
                 _selectedCity = value;
                 OnPropertyChanged();
+                loadWeather();
             }
         }
 
@@ -80,6 +82,18 @@ namespace P03WeatherForecastWPF.Client.ViewModels
                 new City { Name = "Poznań", Country = "Polska" }
             };
            // OnPropertyChanged("Cities");
+        }
+
+        private async void loadWeather()
+        {
+            if (SelectedCity != null)
+            {
+                Weather = new Weather
+                {
+                    Time = DateTime.Now.ToString("HH:mm:ss"),
+                    Temperature2m = 27
+                };
+            }
         }
     }
 }
