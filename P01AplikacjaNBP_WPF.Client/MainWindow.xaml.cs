@@ -20,12 +20,10 @@ namespace P01AplikacjaNBP_WPF.Client
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new ViewModels.MainViewModel(new NbpWebApiService());
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            IWebApiService nbp = new NbpWebApiService();
-            await nbp.GetExchangeRatesAsync();
-        }
+     
     }
 }
