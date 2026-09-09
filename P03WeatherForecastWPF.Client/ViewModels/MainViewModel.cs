@@ -1,5 +1,6 @@
 ﻿using P03WeatherForecastWPF.Client.Commands;
 using P03WeatherForecastWPF.Client.Models;
+using P03WeatherForecastWPF.Client.Services;
 using P04WeatherForecastConsole.Client;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ using System.Windows.Input;
 
 namespace P03WeatherForecastWPF.Client.ViewModels
 {
-    internal class MainViewModel : INotifyPropertyChanged
+    internal class MainViewModel : INotifyPropertyChanged, IMainViewModel
     {
         private string _cityName = "Warszawa";
         private City[] _cities;
         private City _selectedCity;
-        private Weather weather;
-        OpenMeteoService oms = new OpenMeteoService();
+        private Weather _weather;
+        private IMeteoService _ims;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -58,9 +59,9 @@ namespace P03WeatherForecastWPF.Client.ViewModels
 
         public Weather Weather
         {
-            get { return weather; }
+            get { return _weather; }
             set { 
-                weather = value;
+                _weather = value;
                 OnPropertyChanged();
             }
         }
@@ -68,9 +69,10 @@ namespace P03WeatherForecastWPF.Client.ViewModels
         public ICommand LoadCitiesCommand { get; }
 
 
-        public MainViewModel()
+        public MainViewModel(IMeteoService meteoService)
         {
             LoadCitiesCommand = new RelayCommand(x => loadCities());
+            _ims = meteoService;
         }
 
         private async void loadCities()
@@ -86,7 +88,7 @@ namespace P03WeatherForecastWPF.Client.ViewModels
            // OnPropertyChanged("Cities");
 
            
-            Cities = await oms.GetLocationsAsync(_cityName);
+            Cities = await _ims.GetLocationsAsync(_cityName);
         }
 
         private async void loadWeather()
@@ -98,7 +100,7 @@ namespace P03WeatherForecastWPF.Client.ViewModels
                 //    Time = DateTime.Now.ToString("HH:mm:ss"),
                 //    Temperature2m = 27
                 //};
-                Weather = await oms.GetCurrentConditionsAsync(SelectedCity.Latitude, SelectedCity.Longitude);
+                Weather = await _ims.GetCurrentConditionsAsync(SelectedCity.Latitude, SelectedCity.Longitude);
             }
         }
     }

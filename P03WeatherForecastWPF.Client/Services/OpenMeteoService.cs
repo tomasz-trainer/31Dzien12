@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using P03WeatherForecastWPF.Client;
 using P03WeatherForecastWPF.Client.Models;
+using P03WeatherForecastWPF.Client.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace P04WeatherForecastConsole.Client
 {
  
 
-    internal class OpenMeteoService
+    internal class OpenMeteoService : IMeteoService
     {
         private const string geocoding_base_url = "https://geocoding-api.open-meteo.com/v1/search";
         private const string forecast_base_url = "https://api.open-meteo.com/v1/forecast";
