@@ -1,0 +1,31 @@
+﻿using P01AplikacjaNBP_WPF.Client.Services;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace P01AplikacjaNBP_WPF.Client
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            IWebApiService nbp = new NbpWebApiService();
+            await nbp.GetExchangeRatesAsync();
+        }
+    }
+}
